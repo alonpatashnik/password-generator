@@ -1,22 +1,22 @@
 // Assignment code here
-
+var generatePassword = function () {
 // creating arrays of numbers, letters, uppercase letters and special characters
-var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-var specialChar = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
-var uppercase = [];
+  var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  var specialChar = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
+  var uppercase = [];
 
-// adding the uppercase values of [letters] to uppercase array
-for (var i = 0; i<letters.length; i++) {
-  var newUpper = letters[i].toUpperCase();
-  uppercase.push(newUpper);
-}
+  // adding the uppercase values of [letters] to uppercase array
+  for (var i = 0; i<letters.length; i++) {
+    var newUpper = letters[i].toUpperCase();
+    uppercase.push(newUpper);
+  }
 
-//setting variables to be used in generatePassword fuction
-var howManyOfEach = 0;
-var remainder = 0;
-var arraysUsed = [];
-var passwordChars = [];
+  //setting variables to be used in generatePassword fuction
+  var howManyOfEach = 0;
+  var remainder = 0;
+  var arraysUsed = [];
+  var passwordChars = [];
 
 // generating a random item from each array
 
@@ -25,36 +25,38 @@ var passwordChars = [];
 
 
 
-var generatePassword = function () {
+
   //prompting user for password parameters
   var totalChar = prompt("How many characters do you want in your password? (must be between 8 and 128)");
-  if (totalChar < 8) {
+  if (totalChar < 8 || totalChar > 128) {
     alert('invalid input: please try again');
     return "";
-  } else if (totalChar > 128) {
-    alert('invalid input: please try again');
-    return "";
-  } else {
   }
+  
   var userNum = confirm("Do you want numbers in your password?");
   var userletters = confirm("Do you want lowercase letters in your password?");
   var userUpper = confirm("Do you want uppercase numbers in your password?");
   var userSpecial = confirm("Do you want special characters in your password?");
 
-  //takes users input and adds the existing arrays to the new arrays
-  if (userNum){
-    arraysUsed.push(numbers);
-  } else if (userletters){
-    arraysUsed.push(letters);
-  } else if (userUpper){
-    arraysUsed.push(uppercase);
-  } else if (userSpecial){
-    arraysUsed.push(specialChar);
+  //takes users input and adds the existing arrays to the new array
+  if (userNum || userletters || userUpper || userSpecial) {
+    if (userNum){
+      arraysUsed.push(numbers);
+    }
+    if (userletters){
+      arraysUsed.push(letters);
+    }
+    if (userUpper){
+      arraysUsed.push(uppercase);
+    }
+    if (userSpecial){
+      arraysUsed.push(specialChar);
+    }
   } else {
-    alert('invalid input: please try again');
-    return "";
+      alert('invalid input: please try again');
+      return "";
   }
-
+  
   // defines how many random items from each array we're using
   howManyOfEach = Math.floor(totalChar / arraysUsed.length);
   //defines how many leftover chracters we need to ads
