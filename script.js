@@ -32,6 +32,11 @@ var generatePassword = function () {
     alert('invalid input: please try again');
     return "";
   }
+  //checks to see if user input is non numeric
+  if (isNaN(totalChar)) {
+    alert('invalid input: please try again');
+    return "";
+  }
   
   var userNum = confirm("Do you want numbers in your password?");
   var userletters = confirm("Do you want lowercase letters in your password?");
