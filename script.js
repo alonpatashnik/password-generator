@@ -19,53 +19,88 @@ var arraysUsed = [];
 var passwordChars = [];
 
 // generating a random item from each array
-var randNum = numbers[Math.floor(Math.random() * numbers.length)];
-var randLetter = letters[Math.floor(Math.random() * letters.length)];
-var randUpper = uppercase[Math.floor(Math.random() * uppercase.length)];
-var randSpecial = specialChar[Math.floor(Math.random() * specialChar.length)];
+
 
 //getting user input of which 
-var totalChar = prompt("How many characters do you want in your password? (must be between 8 and 128)");
-var userNum = confirm("Do you want numbers in your password?");
-var userletters = confirm("Do you want lowercase letters in your password?");
-var userUpper = confirm("Do you want uppercase numbers in your password?");
-var userSpecial = confirm("Do you want special characters in your password?");
+
 
 
 var generatePassword = function () {
+  //prompting user for password parameters
+  var totalChar = prompt("How many characters do you want in your password? (must be between 8 and 128)");
+  if (totalChar < 8) {
+    alert('invalid input: please try again');
+    return "";
+  } else if (totalChar > 128) {
+    alert('invalid input: please try again');
+    return "";
+  } else {
+  }
+  var userNum = confirm("Do you want numbers in your password?");
+  var userletters = confirm("Do you want lowercase letters in your password?");
+  var userUpper = confirm("Do you want uppercase numbers in your password?");
+  var userSpecial = confirm("Do you want special characters in your password?");
+
+  //takes users input and adds the existing arrays to the new arrays
   if (userNum){
     arraysUsed.push(numbers);
-  }
-  if (userletters){
+  } else if (userletters){
     arraysUsed.push(letters);
-  }
-  if (userUpper){
+  } else if (userUpper){
     arraysUsed.push(uppercase);
-  }
-  if (userSpecial){
+  } else if (userSpecial){
     arraysUsed.push(specialChar);
+  } else {
+    alert('invalid input: please try again');
+    return "";
   }
-  howManyOfEach = totalChar / arraysUsed.length;
-  remainder = totalChar % arraysUsed.length;
 
-  // searching to see if each array listed in arraysUsed is equivalent to one of my original arrays
-  for (var i = 0; i < howManyOfEach; i++) {
+  // defines how many random items from each array we're using
+  howManyOfEach = Math.floor(totalChar / arraysUsed.length);
+  //defines how many leftover chracters we need to ads
+  remainder = totalChar % arraysUsed.length;
+  
+  //adds a random number to a new array for each selector picked by the user and runs that loop
+  //however many times each array needs to be used
+  for (var j = 0; j<howManyOfEach;j++) {
+    var randNum = numbers[Math.floor(Math.random() * numbers.length)];
+    var randLetter = letters[Math.floor(Math.random() * letters.length)];
+    var randUpper = uppercase[Math.floor(Math.random() * uppercase.length)];
+    var randSpecial = specialChar[Math.floor(Math.random() * specialChar.length)];
     for (var i = 0; i < arraysUsed.length; i++) {
-      if (arraysUsed[i] == letters) {
-        passwordChars.push(letters[randLetter]);
+      if (arraysUsed[i] === letters) {
+        passwordChars.push(randLetter);
+      } else if (arraysUsed[i] === numbers){
+        passwordChars.push(randNum);
+      } else if (arraysUsed[i] === uppercase){
+        passwordChars.push(randUpper);
+      } else {
+        passwordChars.push(randSpecial);
       }
-      if (arraysUsed[i] == numbers){
-        passwordChars.push(numbers[randNum]);
-      }
-      if (arraysUsed[i] == uppercase){
-        passwordChars.push(uppercase[randUpper]);
-      }
-      if (arraysUsed[i] == specialChar){
-        passwordChars.push(specialChar[randSpecial]);
-      } 
     }
   }
-  console.log(passwordChars)
+  var passString = "";
+  //adds the remaining number of characters
+  for (var i = 0; i < remainder; i++) {
+    var randNum1 = numbers[Math.floor(Math.random() * numbers.length)];
+    var randLetter1 = letters[Math.floor(Math.random() * letters.length)];
+    var randUpper1 = uppercase[Math.floor(Math.random() * uppercase.length)];
+    var randSpecial1 = specialChar[Math.floor(Math.random() * specialChar.length)];
+    if (arraysUsed[i] === letters) {
+      passwordChars.push(randLetter1);
+    } else if (arraysUsed[i] === numbers){
+      passwordChars.push(randNum1);
+    } else if (arraysUsed[i] === uppercase){
+      passwordChars.push(randUpper1);
+    } else {
+      passwordChars.push(randSpecial1);
+    }
+  }
+  console.log(passwordChars);
+
+  //converts our password array to a string
+  passString = passwordChars.join("");
+  return passString;
 }
 // I need to generate the number of random items from each array that the user specifies
 // I need to randomize all password characters into one cohesive password
@@ -73,7 +108,7 @@ var generatePassword = function () {
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
-
+var clearBtn = document.querySelector('#generate2');
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
@@ -83,5 +118,9 @@ function writePassword() {
 
 }
 
+function clearPassword() {
+  document.querySelector('#password').value = "";
+}
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+clearBtn.addEventListener('click', clearPassword);
